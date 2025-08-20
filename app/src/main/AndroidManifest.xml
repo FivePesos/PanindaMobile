@@ -16,6 +16,9 @@
             android:exported="false"
             android:label="@string/title_activity_navogation_bar" />
         <activity
+            android:name=".SignupPage"
+            android:exported="false" />
+        <activity
             android:name=".HomePage"
             android:exported="true" />
         <activity

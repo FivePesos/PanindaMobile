@@ -9,6 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 import android.widget.EditText
 import android.widget.Toast
 import android.widget.Button
+
 class LoginPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,19 +24,21 @@ class LoginPage : AppCompatActivity() {
         val txtUsername = findViewById<EditText>(R.id.editTextUsername)
         val txtPassword = findViewById<EditText>(R.id.editTextPassword)
         val btnLogin = findViewById<Button>(R.id.BtnLogin)
-
-        val canBeNull: String
-
+        val btnSignupPage = findViewById<Button>(R.id.BtnSignUp)
 
         btnLogin.setOnClickListener {
             if(txtUsername.text.toString() == "jampong" && txtPassword.text.toString() == "jampong123"){
                 val intent = Intent(this, HomePage::class.java)
                 intent.putExtra("USERNAME_KEY", txtUsername.text.toString())
                 startActivity(intent)
-            }else{
+            } else {
                 Toast.makeText(this, "Bayot Ka", Toast.LENGTH_LONG).show()
             }
         }
 
+        btnSignupPage.setOnClickListener {
+            val intent = Intent(this, SignupPage::class.java)
+            startActivity(intent)
+        }
     }
 }
