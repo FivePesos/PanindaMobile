@@ -68,7 +68,7 @@ class ProductSellerCard(private val container: LinearLayout) {
             if (!hasFocus) {
                 val inputQuantity = quantity.text.toString().toIntOrNull() ?: 1
                 currentQuantity = when {
-                    inputQuantity < 1 -> 1
+                    inputQuantity < 1 -> 0
                     inputQuantity > maxStock -> maxStock
                     else -> inputQuantity
                 }

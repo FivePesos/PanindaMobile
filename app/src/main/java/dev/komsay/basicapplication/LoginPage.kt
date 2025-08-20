@@ -28,7 +28,7 @@ class LoginPage : AppCompatActivity() {
 
 
         btnLogin.setOnClickListener {
-            if(txtUsername.text.toString() == "jampong" && txtPassword.text.toString() == "jampong123"){
+            if(txtUsername.text.toString() == "admin" && txtPassword.text.toString() == "admin"){
                 val intent = Intent(this, HomePage::class.java)
                 intent.putExtra("USERNAME_KEY", txtUsername.text.toString())
                 startActivity(intent)

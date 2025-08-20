@@ -8,6 +8,7 @@
     android:background="@color/mainBackgroundColor"
     tools:context=".HomePage">
 
+
     <TextView
         android:id="@+id/dateTimeView"
         android:layout_width="wrap_content"
@@ -20,13 +21,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
+
     <TextView
         android:id="@+id/userTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello, User"
         android:textColor="@color/black"
-        android:textColorLink="@color/black"
         android:textSize="30sp"
         android:textStyle="bold"
         android:fontFamily="@font/inter_bold"
@@ -38,10 +39,72 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:layout_margin="36dp"
+        android:layout_marginEnd="36dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/userTextView"
         app:layout_constraintTop_toBottomOf="@id/userTextView"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <LinearLayout
+        android:id="@+id/bottomNav"
+        android:layout_width="370dp"
+        android:layout_height="70dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/navbar"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="10dp"
+        android:weightSum="5"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+        <ImageButton
+            android:id="@+id/homenavBTN"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:contentDescription="Home"
+            android:src="@drawable/home" />
+
+        <ImageButton
+            android:id="@+id/salesnavBTN"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:contentDescription="Sales"
+            android:src="@drawable/sales" />
+
+        <ImageButton
+            android:id="@+id/profilenavBTN"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:contentDescription="Profile"
+            android:src="@drawable/profile" />
+
+        <ImageButton
+            android:id="@+id/inventorynavBTN"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:contentDescription="Box"
+            android:src="@drawable/box" />
+
+        <ImageButton
+            android:id="@+id/statisticsnavBTN"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:contentDescription="Stats"
+            android:src="@drawable/statistics" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

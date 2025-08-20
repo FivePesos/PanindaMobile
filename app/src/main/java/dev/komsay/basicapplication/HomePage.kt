@@ -14,7 +14,7 @@ import dev.komsay.basicapplication.ui.components.ProductSellerItem
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class HomePage : AppCompatActivity() {
+class  HomePage : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +44,7 @@ class HomePage : AppCompatActivity() {
             stock = 15,
             imageResId = R.drawable.piattos
         )
+
 
         val viewHolder = ProductSellerCard(findViewById(R.id.productSellerContainer))
         viewHolder.bind(product) { selectedProduct, quantity ->
