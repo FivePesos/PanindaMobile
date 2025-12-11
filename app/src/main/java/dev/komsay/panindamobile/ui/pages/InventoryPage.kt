@@ -22,22 +22,22 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import dev.komsay.panindamobile.Paninda
 import dev.komsay.panindamobile.R
+import dev.komsay.panindamobile.backend.dto.CategoryDTO
 import dev.komsay.panindamobile.backend.dto.ProductsDTO
 import dev.komsay.panindamobile.backend.network.RetrofitClient
 import dev.komsay.panindamobile.ui.components.NavigationBarManager
 import dev.komsay.panindamobile.ui.components.ProductInventoryComponent
-import dev.komsay.panindamobile.ui.utils.DataHelper
 import kotlinx.coroutines.launch
 
 class InventoryPage : AppCompatActivity() {
 
     private lateinit var app: Paninda
-    private lateinit var dataHelper: DataHelper
     private lateinit var productContainer: LinearLayout
     private lateinit var categorySlider: LinearLayout
     private var products: List<ProductsDTO> = emptyList()
-    private var categories: List<String> = emptyList()
+    private var categories: List<CategoryDTO> = emptyList()
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private val addOrModifyProductLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -63,13 +63,6 @@ class InventoryPage : AppCompatActivity() {
             setup()
             highlightActivePage(R.id.indicatorInventory)
         }
-
-        // +-------------+
-        // |  MOCK DATA  |
-        // +-------------+
-        app = application as Paninda
-        dataHelper = app.dataHelper
-
 
         productContainer = findViewById(R.id.productInventoryContainer)
         categorySlider = findViewById(R.id.categorySlider)
@@ -128,7 +121,7 @@ class InventoryPage : AppCompatActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun refreshCategoryUI(categories: List<String>) {
+    fun refreshCategoryUI(categories: List<CategoryDTO>) {
         categorySlider.removeAllViews()
 
         for (cat in categories) {
@@ -144,7 +137,7 @@ class InventoryPage : AppCompatActivity() {
                     marginEnd = (8 * scale * 0.5f).toInt()
                 }
 
-                text = cat
+                text = cat.categoryName
                 textSize = 12f
                 typeface = ResourcesCompat.getFont(this@InventoryPage, R.font.inter_regular)
                 setTextColor(ContextCompat.getColor(this@InventoryPage, R.color.black))
@@ -179,8 +172,7 @@ class InventoryPage : AppCompatActivity() {
 
                 products = fetchedProducts
 
-                refreshProductUI(products)
-                refreshCategoryUI(categories)
+                refreshProductUI()
 
             } catch (e: Exception) {
                 Log.e("Inventory", "Failed to load products: ${e.message}")
@@ -196,7 +188,31 @@ class InventoryPage : AppCompatActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun loadCategoriesFromDB() { categories = dataHelper.getAllCategories().sorted() }
+    private fun loadCategoriesFromDB() {
+
+        val catApi = RetrofitClient.getCategoryApi(this)
+
+        lifecycleScope.launch {
+            try {
+                val fetchedCategories = catApi.getAllCategories()
+                Log.d("Inventory: loadCategoriesFromDB()", "Categories fetched: $fetchedCategories")
+
+                categories = fetchedCategories
+
+                refreshCategoryUI(categories)
+
+            } catch (e: Exception) {
+                Log.e("Inventory", "Failed to load categories: ${e.message}")
+                e.printStackTrace()
+
+                Snackbar.make(
+                    findViewById(android.R.id.content),
+                    "Failed to load categories: ${e.message}",
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+        }
+    }
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         if (currentFocus != null) {
